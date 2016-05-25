@@ -10,7 +10,7 @@ namespace PHPCraft\Router;
 interface RouterInterface
 {
     /**
-     * adds a route
+     * Adds a route
      *
      * @param mixed $method a string (or an array of strings) with the HTTP methods assocaited to the route
      * @param string $route
@@ -19,12 +19,11 @@ interface RouterInterface
     public function addRoute($method, $route, $properties = array());
     
     /**
-     * Gets cookie
+     * Parses current request and matches it against defined routes
      *
-     * @param string $path to be parsed and matched against registered routes
      * @return array with following elements:
      *              properties: as defined into the addRoute call $properties argument
      *              parameters: an array with any parameter eventually extracted from the url
      **/
-    public function dispatch($path);
+    public function dispatch();
 }
