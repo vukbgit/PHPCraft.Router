@@ -13,7 +13,7 @@ class RouterNikicFastRoute implements RouterInterface
 {
     private $routeCollector;
 
-/**
+    /**
      * Constructor.
      **/
     public function __construct()
