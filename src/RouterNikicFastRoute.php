@@ -12,6 +12,7 @@ use FastRoute;
 class RouterNikicFastRoute implements RouterInterface
 {
     private $routeCollector;
+    private $messageCode;
 
     /**
      * Constructor.
@@ -38,7 +39,7 @@ class RouterNikicFastRoute implements RouterInterface
     /**
      * Parses current request and matches it against defined routes
      *
-     * @return array with following elements:
+     * @return mixed false on failure or array with following elements:
      *              properties: as defined into the addRoute call $properties argument
      *              parameters: an array with any parameter eventually extracted from the url
      **/
@@ -48,9 +49,35 @@ class RouterNikicFastRoute implements RouterInterface
         $httpMethod = $_SERVER['REQUEST_METHOD'];
         $uri = $_SERVER['REQUEST_URI'];
         $routeInfo = $dispatcher->dispatch($httpMethod, $uri);
-        return [
-            'properties' => $routeInfo[1],
-            'parameters' => $routeInfo[2]
-        ];
+        //success
+        if($routeInfo[0] == FastRoute\Dispatcher::FOUND) {
+            return [
+                'properties' => $routeInfo[1],
+                'parameters' => $routeInfo[2]
+            ];
+        } else {
+        //failure
+            $this->messageCode = $routeInfo[0];
+            return false;
+        }
+    }
+    
+    /**
+     * Gets error for last dispatch try
+     * @return integer error code:
+     *                      404 = NOT FOUND
+     *                      405 = METHOD NOT ALLOWED
+     *                      406 = NOT ACCEPTABLE
+     **/
+    public function getError()
+    {
+        switch($this->messageCode) {
+            case FastRoute\Dispatcher::NOT_FOUND:
+                return 404;
+            break;
+            case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
+                return 405;
+            break;
+        }
     }
 }

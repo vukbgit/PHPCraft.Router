@@ -26,4 +26,13 @@ interface RouterInterface
      *              parameters: an array with any parameter eventually extracted from the url
      **/
     public function dispatch();
+    
+    /**
+     * Gets error for last dispatch try
+     * @return integer error code:
+     *                      404 = NOT FOUND
+     *                      405 = METHOD NOT ALLOWED
+     *                      406 = NOT ACCEPTABLE
+     **/
+    public function getError();
 }
