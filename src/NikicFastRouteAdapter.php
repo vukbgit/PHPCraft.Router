@@ -9,7 +9,7 @@ use FastRoute;
  *
  * @author vuk <info@vuk.bg.it>
  */
-class RouterNikicFastRoute implements RouterInterface
+class NikicFastRouteAdapter implements RouterInterface
 {
     private $routeCollector;
     private $messageCode;
